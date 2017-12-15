@@ -34,7 +34,7 @@ parse_status json_parse(const char*, json_value_t*);
 parse_status json_get_object(json_value_t, const char*, json_value_t*);
 parse_status json_get_array(json_value_t, int, json_value_t*);
 parse_status json_get_number(json_value_t, long long*);
-parse_status json_get_string(json_value_t, char*);
+parse_status json_get_string(json_value_t, char*, int);
 
 void puterror(parse_status);
 

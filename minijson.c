@@ -350,7 +350,7 @@ parse_status json_get_number(json_value_t json, long long *val)
   return PARSE_SUCCEEDED;
 }
 
-parse_status json_get_string(json_value_t json, char *val)
+parse_status json_get_string(json_value_t json, char *val, int buf_size)
 {
   if(json.type != JSON_STRING)
     return PARSE_FAILED_TYPE_MISSMATCH;
@@ -360,7 +360,9 @@ parse_status json_get_string(json_value_t json, char *val)
   parse_status ret;
   if((ret = parse_string(json.value, &end)) != PARSE_SUCCEEDED) 
     return ret;
-  for(i = 0; i < end - json.value - 1; i++) *(val+i) = *(json.value+i+1);
+  int size = end - json.value - 1;
+  size = size < (buf_size - 1) ? size : (buf_size - 1);
+  for(i = 0; i < size; i++) *(val+i) = *(json.value+i+1);
   *(val+i) = '\0';
   return PARSE_SUCCEEDED;
 }

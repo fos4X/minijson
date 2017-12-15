@@ -58,7 +58,7 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  if((ret = json_get_string(val, buf))) {
+  if((ret = json_get_string(val, buf, 32))) {
     puterror(ret);
     exit(EXIT_FAILURE);
   }
