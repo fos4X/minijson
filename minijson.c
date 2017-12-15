@@ -334,6 +334,29 @@ parse_status json_get_array(json_value_t json, int idx, json_value_t *res)
   return json_parse(p, res);
 }
 
+parse_status json_get_array_count(json_value_t json, int *count)
+{
+  if(json.type != JSON_ARRAY)
+    return PARSE_FAILED_TYPE_MISSMATCH;
+
+  char *p = json.value;
+  int c = 0;
+
+  while(*p != ']') {
+    p++;
+    SKIPSPACE(p);
+    skip_value(&p);
+    p++;
+	c++;
+    SKIPSPACE(p);
+    if(*p != ',' && *p != ']')
+      return PARSE_FAILED_ARRAY;
+  }
+
+  *count = c;
+  return PARSE_SUCCEEDED;
+}
+
 parse_status json_get_number(json_value_t json, long long *val)
 {
   if(json.type != JSON_NUMBER)
